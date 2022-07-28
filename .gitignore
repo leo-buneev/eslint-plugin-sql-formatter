@@ -1,0 +1,11 @@
+node_modules
+coverage
+# dist
+*.log
+.*
+!.eslintrc.js
+!.gitignore
+!.npmignore
+!.babelrc
+!.travis.yml
+!.README
