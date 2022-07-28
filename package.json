@@ -1,8 +1,8 @@
 {
   "name": "eslint-plugin-sql-formatter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ESLint plugin for formatting *.sql files and sql`...` template strings inside *.js files",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/leo-buneev/eslint-plugin-sql-formatter",
   "author": "Leonid Buneev <leo.buneev@gmail.com>",
   "license": "MIT",
