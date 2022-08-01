@@ -1,4 +1,5 @@
-const format = require('./rules/format.js')
+const path = require('path')
+const format = require(path.join(__dirname, './rules/format'))
 
 const rules = {
   format,
