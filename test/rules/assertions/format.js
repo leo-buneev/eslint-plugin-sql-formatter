@@ -29,6 +29,34 @@ Select
 \``,
     },
     {
+      code: `
+function foo() {
+  const q = sql\`
+  SELECT
+    1
+\`
+}
+`,
+      errors: [
+        {
+          message: 'Format the query',
+        },
+      ],
+      options: [
+        {
+          ignoreSingleLine: false,
+        },
+      ],
+      output: `
+function foo() {
+  const q = sql\`
+    SELECT
+      1
+  \`
+}
+`,
+    },
+    {
       code: 'sql`SELECT 1`',
       errors: [
         {
@@ -40,7 +68,7 @@ Select
           ignoreSingleLine: false,
         },
       ],
-      output: 'sql`\nSELECT\n  1\n`',
+      output: 'sql`\n  SELECT\n    1\n`',
     },
     {
       code: 'sql`SELECT 2`',
@@ -49,10 +77,8 @@ Select
           message: 'Format the query',
         },
       ],
-      options: [
-        {  ignoreSingleLine: false, sqlFormatterConfig: { tabWidth: 4 } },
-      ],
-      output: 'sql`\nSELECT\n    2\n`',
+      options: [{ ignoreSingleLine: false, sqlFormatterConfig: { tabWidth: 4 } }],
+      output: 'sql`\n  SELECT\n      2\n`',
     },
     {
       code: 'sql`SELECT 3`',

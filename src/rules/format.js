@@ -5,6 +5,7 @@ const create = context => {
   const pluginOptions = (context.options && context.options[0]) || {}
 
   const ignoreInline = pluginOptions.ignoreSingleLine
+  const matchOuterIndentation = pluginOptions.matchOuterIndentation
 
   return {
     TemplateLiteral(node) {
@@ -29,6 +30,24 @@ const create = context => {
       let formatted = format(literal.trim(), pluginOptions.sqlFormatterConfig)
       // console.log('????', formatted)
       formatted = `\n${formatted}\n`
+
+      if (matchOuterIndentation) {
+        const sourceCode = context.getSourceCode()
+        const tagLoc = sourceCode.getLocFromIndex(node.parent.tag.range[0])
+        const tagLine = sourceCode.lines[tagLoc.line - 1]
+        let spaces = 0
+        while (tagLine[spaces] === ' ') {
+          spaces++
+        }
+        const formattedLines = formatted.split('\n')
+        formatted = formattedLines
+          .map((line, i) => {
+            if (i === 0) return line
+            if (i === formattedLines.length - 1) return ' '.repeat(spaces) + line
+            return ' '.repeat(spaces + 2) + line
+          })
+          .join('\n')
+      }
 
       if (formatted !== literal) {
         context.report({
@@ -70,13 +89,17 @@ module.exports = {
       {
         additionalProperties: false,
         properties: {
+          matchOuterIndentation: {
+            default: true,
+            type: 'boolean',
+          },
           ignoreSingleLine: {
             default: true,
             type: 'boolean',
           },
           sqlFormatterConfig: {
             type: 'object',
-          }
+          },
         },
         type: 'object',
       },

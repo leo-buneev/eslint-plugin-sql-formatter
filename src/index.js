@@ -1,6 +1,4 @@
-// @flow
-
-const format = require('./rules/format')
+const format = require('./rules/format.js')
 
 const rules = {
   format,
